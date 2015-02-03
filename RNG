@@ -1,0 +1,34 @@
+#BSD license
+from pybitcointools import *
+import urllib
+from random import *
+
+class Random:
+
+	def PRNG(self):
+		data = ""
+	for i in range(0,512):
+		data = data + "%06x" % randint(0,0xFFFFFF)
+	return data
+
+	def QRNG(self):
+		response = urllib.urlopen('https://qrng.anu.edu.au/RawHex.php')
+	data = response.read()
+	data = data[data.index("<td>")+len("<td>")+1:]
+	data = data[:data.index("/td>")]
+	return data
+
+p = Random()
+password = sha256(sha256(p.QRNG()+p.PRNG())
+
+print password
+
+priv = sha256(password)
+pub = privtopub(priv)
+address = pubtoaddr(pub)
+
+print("")
+print("Address: " + address)
+print("Private key: " + priv)
+print("Public key: " + pub)
+print("")
