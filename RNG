@@ -1,4 +1,3 @@
-#BSD license
 from pybitcointools import *
 import urllib
 from random import *
